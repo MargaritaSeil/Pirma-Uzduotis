@@ -100,7 +100,6 @@ double median(vector<float> &vec) {
   return size%2==0 ? (vec[vid] + vec[vid]) / 2 : vec[vid];
 }
 
-int random_grade() //sugeneruoja random skaiciu nuo 1 iki 10
-{
+int random_grade() { //sugeneruoja random sk nuo 1 iki 10
     return rand() % 10 + 1;
 }
