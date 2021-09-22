@@ -49,10 +49,12 @@ int main() {
       cin>>k;
 
       for(int j=0; j<k; j++) {
-        random=(float) random_grade();
+        random = (float) random_grade();
         temp.paz.push_back(random);
         sum+= random;
       }
+      random = (float) random_grade();
+      temp.egz = random;
     }
     else {
       cout<<"Įveskite "<<i+1<<"-o studento pažymius (1-10), baigę, įveskite simbolį, kuris nėra skaičius: ";
@@ -60,11 +62,11 @@ int main() {
         temp.paz.push_back(laik);
         sum+= laik; ///kol nesibaigs ciklas, bus sumuojami pazymiai
       }
+      cin.clear(); ///ignoruoti bloga ivesti
+      cin.ignore(10000, '\n'); ///ingoruoti paskutini ivesta n
+      cout<<"Įveskite "<<i+1<<"-o studento egzamino pažymį(1-10): ";
+      cin>>temp.egz;
     }
-    cin.clear(); ///ignoruoti bloga ivesti
-    cin.ignore(10000, '\n'); ///ingoruoti paskutini ivesta n
-    cout<<"Įveskite "<<i+1<<"-o studento egzamino pažymį(1-10): ";
-    cin>>temp.egz;
     vid=accumulate(temp.paz.begin(), temp.paz.end(), 0.0) / temp.paz.size();
     temp.med=median(temp.paz);
     temp.galutinis_pazymys=0.4*vid+0.6*temp.egz;
