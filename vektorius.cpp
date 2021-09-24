@@ -84,7 +84,7 @@ void names () {
   cout<<"\n";
   cout<<setw(15)<<left<<"Vardas"
   <<setw(15)<<left<<"Pavarde"<<setw(15)<<left<<"Galutinis(vid.)"<<setw(15)<<left<<" / Galutinis(med.)"
-  <<"\n---------------------------------------------------------------------------------------\n";
+  <<"\n---------------------------------------------------------------------\n";
 }
 
 void print(studentas kint) {
