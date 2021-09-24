@@ -93,12 +93,12 @@ void names () {
   cout<<"\n";
   cout<<setw(15)<<left<<"Vardas"
   <<setw(15)<<left<<"Pavarde"<<setw(15)<<left<<"Galutinis(vid.)"<<setw(15)<<left<<" / Galutinis(med.)"
-  <<"\n---------------------------------------------------------------------------------------\n";
+  <<"\n---------------------------------------------------------------------\n";
 }
 
 void print(studentas kint) {
   cout<<setw(15)<<kint.vardas<<setw(15)<<kint.pavarde;
-  cout<<setw(16)<<setprecision(3)<<kint.galutinis_paz<<setw(15)<<setprecision(3)<<kint.med<<endl;
+  cout<<setw(16)<<setprecision(3)<<kint.galutinis_paz<<setw(15)<<kint.med<<endl;
 }
 int random_grade() { //sugeneruoja random skaiciu nuo 1 iki 10
     return rand() % 10 + 1;
