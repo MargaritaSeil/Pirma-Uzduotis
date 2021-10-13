@@ -28,11 +28,14 @@ int main() {
   int n; ///studentu sk
   float sum=0, laik, vid, med; //laik - laikinas kintamamsis ivesciai
   string str_auto;
+  string v_m;
   srand(time(NULL));
 
   cout << "Įveskite studentų skaičių: " <<endl;
   cin >> n; 
   grupe.reserve(n);
+  cout << "Ar galutinį skaičiuoti su mediana ar vidurkiu? (m/v) ";
+  cin >> v_m;
 
   for (int i=0; i<n; i++){
     cout<<"Įveskite "<<i+1<<"-o studento vardą: ";
@@ -69,7 +72,12 @@ int main() {
     }
     vid=accumulate(temp.paz.begin(), temp.paz.end(), 0.0) / temp.paz.size();
     temp.med=median(temp.paz);
-    temp.galutinis_pazymys=0.4*vid+0.6*temp.egz;
+    if(v_m == "v"){
+      temp.galutinis_paz=0.4*vid+0.6*temp.egz;
+    }
+    else {
+      temp.galutinis_paz=0.4*temp.med+0.6*temp.egz;
+    }
     grupe.push_back(temp);
     temp.paz.clear();
   } 
@@ -83,13 +91,13 @@ int main() {
 void names () {
   cout<<"\n";
   cout<<setw(15)<<left<<"Vardas"
-  <<setw(15)<<left<<"Pavarde"<<setw(15)<<left<<"Galutinis(vid.)"<<setw(15)<<left<<" / Galutinis(med.)"
-  <<"\n---------------------------------------------------------------------\n";
+  <<setw(15)<<left<<"Pavarde"<<setw(15)<<left<<"Galutinis"
+  <<"\n-------------------------------------------------\n";
 }
 
 void print(studentas kint) {
   cout<<setw(15)<<kint.vardas<<setw(15)<<kint.pavarde;
-  cout<<setw(16)<<setprecision(3)<<kint.galutinis_pazymys<<setw(15)<<kint.med<<endl;
+  cout<<setw(15)<<setprecision(3)<<kint.galutinis_pazymys<<endl;
 }
 
 double median(vector<float> &vec) {
