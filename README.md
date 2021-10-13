@@ -1,4 +1,10 @@
 # Pirma-Uzduotis
+# v0.1
+* Sukurta strūktūra su studento vardu, pavarde, namų darbų pažymiais bei egzamino pažymiu.
+* Parašyta programa leidžia vartotojui įrašyti pažymius ranka arba pasirinkti, kad pažymiai būtų automatiškai sugeneruojami.
+* Tuomet pasakaičiuojamas vidurkis, mediana bei galutinis pažymys.
+* Galiausiai duomenys išvedami į lentelę.
+
 # v0.3
 * Šiai versijai naudojama v0.2 versija.
 * Struktūra bei funckijos perkeltos į antraštinius failus:
