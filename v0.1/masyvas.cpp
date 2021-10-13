@@ -29,12 +29,16 @@ int main() {
     int n; ///studentu sk
     float sum=0, laik, vid, med; //laik - laikinas kintamamsis ivesciai
     string str_auto;
+    string v_m;
     srand(time(NULL));
     int k; //paz dydis
 
     cout << "Įveskite studentų skaičių: " <<endl;
     cin >> n;
     studentas grupe[n];
+    cout << "Ar galutinį skaičiuoti su mediana ar vidurkiu? (m/v) ";
+    cin >> v_m;
+   
     for (int i=0; i<n; i++){
         cout<<"Įveskite "<<i+1<<"-o studento vardą: ";
         cin>>temp.vardas;       
@@ -79,7 +83,12 @@ int main() {
         else {
             temp.med = temp.paz[k/2];
         }
-        temp.galutinis_paz=0.4*vid+0.6*temp.egz;
+        if(v_m == "v"){
+            temp.galutinis_paz=0.4*vid+0.6*temp.egz;
+        }
+        else {
+            temp.galutinis_paz=0.4*temp.med+0.6*temp.egz;
+        }
         grupe[i] = temp;
     }
     names();
@@ -92,13 +101,13 @@ int main() {
 void names () {
   cout<<"\n";
   cout<<setw(15)<<left<<"Vardas"
-  <<setw(15)<<left<<"Pavarde"<<setw(15)<<left<<"Galutinis(vid.)"<<setw(15)<<left<<" / Galutinis(med.)"
-  <<"\n---------------------------------------------------------------------\n";
+  <<setw(15)<<left<<"Pavarde"<<setw(15)<<left<<"Galutinis"
+  <<"\n--------------------------------------------------\n";
 }
 
 void print(studentas kint) {
   cout<<setw(15)<<kint.vardas<<setw(15)<<kint.pavarde;
-  cout<<setw(16)<<setprecision(3)<<kint.galutinis_paz<<setw(15)<<kint.med<<endl;
+  cout<<setw(15)<<setprecision(3)<<kint.galutinis_paz<<endl;
 }
 int random_grade() { //sugeneruoja random skaiciu nuo 1 iki 10
     return rand() % 10 + 1;
