@@ -1,5 +1,5 @@
-#ifndef MATHIES_H
-#define MATHIES_H
+#ifndef MATH_H
+#define MATH_H
 
 #include <iostream>
 #include <vector>
