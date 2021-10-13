@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-#include <numeric>
+#include <numeric> //accumulate 
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
@@ -22,68 +22,62 @@ int random_grade();
 void names();
 void print(studentas);
 double median(vector<float> &vec);
-bool compareStudents(studentas a, studentas b){
-	return a.vardas.compare(b.vardas) < 0;
-}
+bool compareStudents(studentas a, studentas b);
 
 int main() {
     vector <studentas> grupe;
     studentas temp; ///laikinas kintamasis
     int n; ///studentu sk
     float sum=0, laik, vid, med; //laik - laikinas kintamamsis ivesciai
-    string strAuto;			//changed from str_auto
+    string strAuto;         //changed from str_auto
     srand(time(NULL));
     string strLoad;
     string line;
-    ifstream readFile("studentai10000.txt");
+    string v_m;
+    ifstream readFile("studentai100000.txt");
     ofstream writeFile("rez.txt");
     
     cout << "Ar skaityti iš failo? (t/n) ";
     cin >> strLoad;
     if(strLoad == "t"){
-	    if(readFile.is_open()){
-		    float nd1, nd2, nd3, nd4, nd5;
-		    float nd6, nd7, nd8, nd9, nd10;
-		    float nd11, nd12, nd13, nd14, nd15;
-		    getline(readFile, line); //ignoruoja pirma eilute
-		    while(getline(readFile, line)){
-			    istringstream iss(line);
-			    iss >> temp.vardas >> temp.pavarde
-			    >> nd1 >> nd2 >> nd3 >> nd4 >> nd5 
-                >> nd6 >> nd7 >> nd8 >> nd9 >> nd10
-                >> nd11 >> nd12 >> nd13 >> nd14 >> nd15
-			    >> temp.egz;
-			    temp.paz.push_back(nd1);
-			    temp.paz.push_back(nd2);
-			    temp.paz.push_back(nd3);
-			    temp.paz.push_back(nd4);
-			    temp.paz.push_back(nd5);
-			    temp.paz.push_back(nd6);
-			    temp.paz.push_back(nd7);
-			    temp.paz.push_back(nd8);
-			    temp.paz.push_back(nd9);
-			    temp.paz.push_back(nd10);
-			    temp.paz.push_back(nd11);
-			    temp.paz.push_back(nd12);
-			    temp.paz.push_back(nd13);
-			    temp.paz.push_back(nd14);
-			    temp.paz.push_back(nd15);
-			    n++;
-            
+        cout << "Ar galutinį skaičiuoti su mediana ar vidurkiu? (m/v) ";
+        cin >> v_m;
+        if(readFile.is_open()){
+            float studentGrade;		//variable for grades.
+            getline(readFile, line); //ignoruoja pirma eilute
+            while(getline(readFile, line)){ //skaito po viena eilute ir laiko 'line' kintamajame
+                istringstream iss(line); //in-built class
+                iss >> temp.vardas >> temp.pavarde;	//first/last name
+                while(iss >> studentGrade){
+                    temp.paz.push_back(studentGrade);
+                    temp.egz = studentGrade;
+                }
+                temp.paz.pop_back();
+                
                 vid=accumulate(temp.paz.begin(), temp.paz.end(), 0.0) / temp.paz.size();
                 temp.med=median(temp.paz);
-                temp.galutinis_paz=0.4*vid+0.6*temp.egz;
+                
+                if(v_m == "v"){
+                    temp.galutinis_paz=0.4*vid+0.6*temp.egz;
+                }
+                else {
+                    temp.galutinis_paz=0.4*temp.med+0.6*temp.egz;
+                }
+                
                 grupe.push_back(temp);
                 temp.paz.clear();
-		    }
+            }
             readFile.close();
-	    }
-	    else{ cout << "neišeina atidaryti failo"; }
+        }
+        else{ cout << "neišeina atidaryti failo"; }
     }
     else {
         cout << "Įveskite studentų skaičių: " <<endl;
         cin >> n;
         grupe.reserve(n);
+        
+        cout << "Ar galutinį skaičiuoti su mediana ar vidurkiu? (m/v) ";
+        cin >> v_m;
         for (int i=0; i<n; i++){
             cout<<"Įveskite "<<i+1<<"-o studento vardą: ";
             cin>>temp.vardas;
@@ -92,6 +86,7 @@ int main() {
             sum=0;
             cout<<"Ar įvesti pažymius automatiškai? (t/n) ";
             cin>>strAuto;
+            
             if(strAuto == "t") {
                 int k;
                 float random;
@@ -116,18 +111,24 @@ int main() {
                 cout<<"Įveskite "<<i+1<<"-o studento egzamino pažymį(1-10): ";
                 cin>>temp.egz;
             }
-            vid=accumulate(temp.paz.begin(), temp.paz.end(), 0.0) / temp.paz.size(); 
+            vid=accumulate(temp.paz.begin(), temp.paz.end(), 0.0) / temp.paz.size();
             temp.med=median(temp.paz);
-            temp.galutinis_paz=0.4*vid+0.6*temp.egz;
+            
+            if(v_m == "v"){
+                temp.galutinis_paz=0.4*vid+0.6*temp.egz;
+            }
+            else {
+                temp.galutinis_paz=0.4*temp.med+0.6*temp.egz;
+            }
             grupe.push_back(temp);
-            temp.paz.clear();
+            temp.paz.clear(); //kintamojo isvalymas
         }
     }
     sort(grupe.begin(), grupe.end(), compareStudents);
     names();
     if(writeFile.is_open()){
-        writeFile<<setw(15)<<left<<"Vardas"<<setw(15)<<left<<"Pavarde"<<setw(15)<<left<<"Galutinis(vid.)"<<setw(15)<<left<<" / Galutinis(med.)"
-        <<"\n---------------------------------------------------------------------\n";
+       writeFile<<setw(15)<<left<<"Vardas"<<setw(15)<<left<<"Pavarde"<<setw(15)<<left<<"Galutinis"
+       <<"\n--------------------------------------------------\n";
     }
     else {
         cout << "negalima įrašyti. ";
@@ -135,25 +136,26 @@ int main() {
     for (const auto &kint: grupe) {
         print(kint);
         if(writeFile.is_open()) {
- 		writeFile<<setw(15)<<kint.vardas<<setw(15)<<kint.pavarde;
-        writeFile<<setw(16)<<setprecision(3)<<kint.galutinis_paz<<setw(15)<<kint.med<<endl;
+            writeFile<<setw(15)<<kint.vardas<<setw(15)<<kint.pavarde;
+            writeFile<<setw(16)<<setprecision(3)<<kint.galutinis_paz<<endl;
         }
         else {
             cout << "negalima įrašyti." ;
         }
     }
-    writeFile.close();		
+    writeFile.close();     
 }
+
 void names () {
   cout<<"\n";
   cout<<setw(15)<<left<<"Vardas"
-  <<setw(15)<<left<<"Pavarde"<<setw(15)<<left<<"Galutinis(vid.)"<<setw(15)<<left<<" / Galutinis(med.)"
-  <<"\n---------------------------------------------------------------------------------------\n";
+  <<setw(15)<<left<<"Pavarde"<<setw(15)<<left<<"Galutinis(vid.)"
+  <<"\n--------------------------------------------------\n";
 }
 
 void print(studentas kint) {
   cout<<setw(15)<<kint.vardas<<setw(15)<<kint.pavarde;
-  cout<<setw(16)<<setprecision(3)<<kint.galutinis_paz<<setw(15)<<kint.med<<endl;
+  cout<<setw(16)<<setprecision(3)<<kint.galutinis_paz<<endl;
 }
 
 double median(vector<float> &vec) {
@@ -166,7 +168,10 @@ double median(vector<float> &vec) {
   return size%2==0 ? (vec[vid] + vec[vid]) / 2 : vec[vid];
 }
 
-int random_grade() //sugeneruoja random skaiciu nuo 1 iki 10
-{
+int random_grade() {//sugeneruoja random skaiciu nuo 1 iki 10
     return rand() % 10 + 1;
+}
+
+bool compareStudents(studentas a, studentas b){
+	return a.vardas.compare(b.vardas) < 0;
 }
