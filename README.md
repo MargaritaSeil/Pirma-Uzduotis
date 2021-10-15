@@ -1,6 +1,6 @@
 # Pirma-Uzduotis
 # v0.4
-* Sugeneruojami n studentų sąrašai (vardas, pavardė, nd pažymiai bei egzamino pažymys).
+* Sugeneruojamas n studentų sąrašas (vardas, pavardė, nd pažymiai bei egzamino pažymys) ir išvedami į failą.
 * Šie studentai surūšiuojami i dvi grupes:
 1) 'kietiakai', kurių galutinis pažymys yra >=5;
 2) 'vargšiukai', kurių galutinis pažymys yra <5.
