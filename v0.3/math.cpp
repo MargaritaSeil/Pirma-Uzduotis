@@ -20,14 +20,13 @@ int random_grade() //sugeneruoja random skaiciu nuo 1 iki 10
 }
 
 float avgExam(float vid, studentas s){
-  //new local variable here
-  float sad;
-  sad=0.4*vid+0.6*s.egz;
-  return sad;
+  float finn;
+  finn=0.4*vid+0.6*s.egz;
+  return finn;
 }
 
 float medExam(studentas s){
-  float sad;
-  sad=0.4*s.med+0.6*s.egz;
-  return sad;
+  float finn;
+  finn=0.4*s.med+0.6*s.egz;
+  return finn;
 }
