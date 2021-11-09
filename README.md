@@ -31,4 +31,3 @@
 3) Studentų rūšiavimo į dvi grupes;
 4) Surūšiuotų studentų grupių išvedimo į du naujus failus laikas.
 
-![Screenshot from 2021-11-09 22-02-59](https://user-images.githubusercontent.com/90559062/140996571-42356081-ca13-480d-8ca3-14b934a267f0.png)
