@@ -100,6 +100,4 @@ int main() {
   diff = end-start;
   cout <<"Failo iš " << nStudentai <<" studentų įrašų nuskaitymo laikas: ";
   cout << diff.count() << "s" << endl;
-
-
 } 
