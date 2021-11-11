@@ -104,10 +104,3 @@ void writeGeneratedList(studentas kint, std::ofstream &file) {
     std::cout << "negalima įrašyti." ;
   }
 }
-
-
-
-
-
-
-
