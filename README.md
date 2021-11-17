@@ -31,10 +31,11 @@
 3) Studentų rūšiavimo į dvi grupes;
 4) Surūšiuotų studentų grupių išvedimo į du naujus failus laikas.
 * Testvimas atliktas su 10 pažymių:
-![1000 v0 4](https://user-images.githubusercontent.com/90559062/141158673-bc82a59c-fc3f-43c3-94c9-8aa1af9b48ae.png)
-![10000 v0 4](https://user-images.githubusercontent.com/90559062/141158697-3363f676-ffec-4dd2-97c5-79d4d5489657.png)
-![100000 v0 4](https://user-images.githubusercontent.com/90559062/141158733-d5cc554b-b2ea-4116-a194-c10354ae7e06.png)
-![1000000 v0 4](https://user-images.githubusercontent.com/90559062/141158760-c6d65559-97da-4870-b6af-65622ddd8b52.png)
+![1000 0 4](https://user-images.githubusercontent.com/90559062/142260168-e29624ad-4af7-4536-a4d7-f61f9181aeee.png)
+![10000 0 4](https://user-images.githubusercontent.com/90559062/142260197-6bab88ef-15d9-479a-88ec-e2d054730a3c.png)
+![100000 0 4](https://user-images.githubusercontent.com/90559062/142260250-28619aad-3e43-461f-9f9d-de0fadf2b3fb.png)
+![1000000 0 4](https://user-images.githubusercontent.com/90559062/142260716-a1b739d3-1473-4a46-8711-fa21cfdba9c7.png)
+![10000000 0 4](https://user-images.githubusercontent.com/90559062/142260337-0b10891a-ae86-4724-9fe0-a24eb5022d1d.png)
 
 # v0.5
 * Konteinerių testavimas;
