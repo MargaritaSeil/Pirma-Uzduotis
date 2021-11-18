@@ -5,8 +5,8 @@ void generateList(std::list<studentas> &grupe, int nStudentai, int nPaz) {
   float random;
 
   for (int i=0; i<nStudentai; i++) {
-    temp.vardas = "Vardas" + std::to_string(i);
-    temp.pavarde = "Pavarde" + std::to_string(i);
+    temp.vardas = "Vardas" + std::to_string(i+1);
+    temp.pavarde = "Pavarde" + std::to_string(i+1);
 
     for(int j=0; j<nPaz; j++) {
       
@@ -21,15 +21,25 @@ void generateList(std::list<studentas> &grupe, int nStudentai, int nPaz) {
     temp.paz.clear();
   }
 }
+
 void pazSkaic(std::list<studentas> &grupe) {
   float vid;
 
   for (auto &kint: grupe) {
     vid=std::accumulate(kint.paz.begin(), kint.paz.end(), 0.0) / kint.paz.size();
-    kint.med = median(kint.paz);
     kint.galutinis_paz = 0.4 * vid + 0.6 * kint.egz;
   }
 }
+
+void pazSkaic(std::vector<studentas> &grupe) {
+  float vid;
+
+  for (auto &kint: grupe) {
+    vid=std::accumulate(kint.paz.begin(), kint.paz.end(), 0.0) / kint.paz.size();
+    kint.galutinis_paz = 0.4 * vid + 0.6 * kint.egz;
+  }
+}
+
 int randomNumber() {
 
   using hrClock = std::chrono::high_resolution_clock;
@@ -39,17 +49,7 @@ int randomNumber() {
   return dist(mt);
 }
 
-double median(std::vector<float> &vec) {
-  typedef std::vector<float>::size_type vecSize;
-  vecSize size = vec.size();
-  if (size == 0) ///tikrinam ar vektorius nera tuscias
-  throw std::domain_error("negalima skaičiuoti medianos tuščiam vekotoriui");
-  std::sort(vec.begin(), vec.end()); ///surusiuojam elementus didejimo tvarka
-  vecSize vid = size/2; ///randamas vidurkis
-  return size%2==0 ? (vec[vid] + vec[vid]) / 2 : vec[vid];
-}
-
-bool compareStudents(studentas a, studentas b){
+bool compareNames(studentas a, studentas b){
 	return a.vardas.compare(b.vardas) < 0;
 }
 
@@ -103,4 +103,50 @@ void writeGeneratedList(studentas kint, std::ofstream &file) {
   else {
     std::cout << "negalima įrašyti." ;
   }
+}
+
+void readFile(std::ifstream &file, std::list<studentas> &grupe) {
+  studentas readStud;
+  float readPaz;
+  std::string readLine;
+  
+  if(file.is_open()){
+    getline(file, readLine);
+    while(getline(file, readLine)) {
+      std::istringstream iss(readLine);
+      iss >> readStud.vardas >> readStud.pavarde;
+      
+      while(iss >> readPaz){
+        readStud.paz.push_back(readPaz);
+        readStud.egz = readPaz;
+      }
+			readStud.paz.pop_back();
+      grupe.push_back(readStud);
+      readStud.paz.clear();
+    }
+  }
+  else{ std::cout << "neišeina atidaryti failo"; }
+}
+
+void readFile(std::ifstream &file, std::vector<studentas> &grupe){
+  studentas readStud;
+  float readPaz;
+  std::string readLine;
+  
+  if(file.is_open()){
+    getline(file, readLine);
+    while(getline(file, readLine)) {
+      std::istringstream iss(readLine);
+      iss >> readStud.vardas >> readStud.pavarde;
+      
+      while(iss >> readPaz){
+        readStud.paz.push_back(readPaz);
+        readStud.egz = readPaz;
+      }
+			readStud.paz.pop_back();
+      grupe.push_back(readStud);
+      readStud.paz.clear();
+    }
+  }
+  else{ std::cout << "neišeina atidaryti failo"; }
 }
