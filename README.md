@@ -11,7 +11,13 @@
 
 * Antra strategija (v.1.0.2):
   Studentų konteinerio rūšiavimas panaudojant tik vieną naują konteinerį (jei studento galutinis pažymys mažensnis nei 5, jis perkeliamas į naują konteinerį ir       ištrinamas iš bendrojo konteinerio)
+![1000 1 0 2](https://user-images.githubusercontent.com/90559062/142513745-8bfa2351-ae83-423d-b812-3874b271bddf.png)
+![10000 1 0 2](https://user-images.githubusercontent.com/90559062/142513756-746bdc3b-6790-49ed-afcc-f9bc21e6fe98.png)
+![100000 1 0 2](https://user-images.githubusercontent.com/90559062/142513782-f01fcc50-967d-442e-8f9d-8dee17f6f916.png)
+![1000000 1 0 1](https://user-images.githubusercontent.com/90559062/142513801-ed839519-1ef3-43fa-8370-9c996a9ca068.png)
   
-  
-  
-  Antroje startegijoje panaudoti algoritmai paspartinti rūšiavimą.
+* Antroje startegijoje panaudoti algoritmai paspartinti rūšiavimą:
+1) remove_if;
+2) copy_if;
+3) stable_partition;
+4) copy_n.
