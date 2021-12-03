@@ -76,7 +76,7 @@
 
 # Naudojimosi instrukcija
 1) Parsisiųsti main.cpp, studentas.cpp ir studentas.h failus.
-2) Paleisti VS, VSC, Code::Blocks, galima naudoti komandą atsidarius terminalą:
+2) Paleisti per VS, Code::Blocks, aš naudojau - VSC, galima atsidarius terminalą paleisti komandą:
 ```
 $ g++ studentas.cpp main.cpp -O3 -o myprogram
 $ ./myprogram
