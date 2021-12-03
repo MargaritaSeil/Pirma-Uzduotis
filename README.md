@@ -73,3 +73,11 @@
 2) copy_if;
 3) stable_partition;
 4) copy_n.
+
+# Naudojimosi instrukcija
+1) Parsisiųsti main.cpp, studentas.cpp ir studentas.h failus.
+2) Paleisti VS, VSC, Code::Blocks, galima naudoti komandą atsidarius terminalą:
+```
+$ g++ studentas.cpp main.cpp -O3 -o myprogram
+$ ./myprogram
+```
