@@ -15,7 +15,8 @@
 ![10000 1 0 2](https://user-images.githubusercontent.com/90559062/142513756-746bdc3b-6790-49ed-afcc-f9bc21e6fe98.png)
 ![100000 1 0 2](https://user-images.githubusercontent.com/90559062/142513782-f01fcc50-967d-442e-8f9d-8dee17f6f916.png)
 ![1000000 1 0 1](https://user-images.githubusercontent.com/90559062/142513801-ed839519-1ef3-43fa-8370-9c996a9ca068.png)
-  
+![1000000 1 0 2](https://user-images.githubusercontent.com/90559062/145459083-ca001521-c88f-4ae5-8084-9557b7bce81d.png)
+
 * Antroje startegijoje panaudoti algoritmai paspartinti rūšiavimą:
 1) remove_if;
 2) copy_if;
