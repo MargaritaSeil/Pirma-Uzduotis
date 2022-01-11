@@ -9,10 +9,14 @@
 #include "lib.hpp"
 
 int main() {
-  ifstream ifStudentuFailas("studentų sąrašas.txt");
-  ofstream ofStudentuFailas("studentų sąrašas.txt");
-  ofstream ofVargsiukaiFailas("vargšiukai.txt");
-  ofstream ofKietiakaiFailas("kietiakai.txt");
+  
+  string fn = " ";
+  string varg = " ";
+  string kiet = " ";
+  
+  ifstream ifStudentuFailas;
+  ofstream ofVargsiukaiFailas;
+  ofstream ofKietiakaiFailas;
 
   list<studentas> grupeStudentaiList;  
   list<studentas> vargsiukaiList;
@@ -25,118 +29,123 @@ int main() {
   deque<studentas> grupeStudentaiDeque;  
   deque<studentas> vargsiukaiDeque;
   deque<studentas> kietiakaiDeque;
-
-  int nStudentai;
-  int nPaz;
-  
+ 
   auto start = std::chrono::high_resolution_clock::now(); // Paleisti
   auto end = std::chrono::high_resolution_clock::now(); // Stabdyti
   std::chrono::duration<double> diff = end-start; // Skirtumas (s)
  
   cout << std::fixed;
-  cout << "Įveskite studentų skaičių: " <<endl;
-  cin >> nStudentai;
-  
-  cout<<"Kiek bus namų darbų pažymių? ";
-  cin >> nPaz;
 
-  generateList(grupeStudentaiList, nStudentai, nPaz);
-  writeGeneratedListTitle(nPaz, ofStudentuFailas);
-  for(const auto &kint : grupeStudentaiList) { 
-    writeGeneratedList(kint, ofStudentuFailas);   
-  }
-  grupeStudentaiList.clear();
-  ofStudentuFailas.close();
-  
-  readFile(ifStudentuFailas, grupeStudentaiList);
-  ifStudentuFailas.close();
+  for(int i = 1000; i <= 10000000; i=i*10){
+    fn = to_string(i) + " studentu sarasas.txt";
+    varg = to_string(i) + " vargsiukai.txt";
+    kiet = to_string(i) + " kietiakai.txt";
 
-  pazSkaic(grupeStudentaiList);
-  start = std::chrono::high_resolution_clock::now();
-  for (const auto &kint: grupeStudentaiList) {
-    if(kint.galutinis_paz < 5){
-      vargsiukaiList.push_back(kint); 
+    ofVargsiukaiFailas.open(varg, std::ofstream::out  |std::ofstream::trunc);
+    ofVargsiukaiFailas.close();
+    
+    ofKietiakaiFailas.open(kiet, std::ofstream::out  |std::ofstream::trunc);
+    ofKietiakaiFailas.close();
+
+    ifStudentuFailas.open(fn);
+    readFile(ifStudentuFailas, grupeStudentaiList);
+    ifStudentuFailas.close();
+
+    pazSkaic(grupeStudentaiList);
+    start = std::chrono::high_resolution_clock::now();
+    for (const auto &kint: grupeStudentaiList) {
+      if(kint.galutinis_paz < 5){
+        vargsiukaiList.push_back(kint); 
+      }
+      else {
+        kietiakaiList.push_back(kint);
+      }
     }
-    else {
-      kietiakaiList.push_back(kint);
+    end = std::chrono::high_resolution_clock::now();
+    diff = end-start;
+    cout << i << " studentų dalijimas į dvi grupes užtruko naudojant list: ";
+    cout << diff.count() << "s" << endl;
+    
+    vargsiukaiList.sort(compareNames);
+    kietiakaiList.sort(compareNames);
+    
+    ofVargsiukaiFailas.open(varg);
+    writeTitle(ofVargsiukaiFailas);
+    for(const auto &kint : vargsiukaiList) {
+      writeResults(kint, ofVargsiukaiFailas);
     }
-  }
-  end = std::chrono::high_resolution_clock::now();
-  diff = end-start;
-  cout << nStudentai <<" studentų dalijimas į dvi grupes užtruko naudojant list: ";
-  cout << diff.count() << "s" << endl;
-  
-  grupeStudentaiList.sort(compareNames);
-  vargsiukaiList.sort(compareNames);
-  kietiakaiList.sort(compareNames);
-  
-  writeTitle(ofVargsiukaiFailas);
-  for(const auto &kint : vargsiukaiList) {
-    writeResults(kint, ofVargsiukaiFailas);
-  }
-  ofVargsiukaiFailas.close();
-  
-  writeTitle(ofKietiakaiFailas);
-  for(const auto &kint : kietiakaiList) {
-    writeResults(kint, ofKietiakaiFailas);
-  }
-  ofKietiakaiFailas.close();
-
-  grupeStudentaiList.clear();
-  vargsiukaiList.clear();
-  kietiakaiList.clear();
-  
-  ifStudentuFailas.open("studentų sąrašas.txt");
-  readFile(ifStudentuFailas, grupeStudentaiVector);
-  ifStudentuFailas.close();
-
-  pazSkaic(grupeStudentaiVector);
-  start = std::chrono::high_resolution_clock::now();
-  for (const auto &kint: grupeStudentaiVector) {
-    if(kint.galutinis_paz < 5){
-      vargsiukaiVector.push_back(kint); 
+    ofVargsiukaiFailas.close();
+    
+    ofKietiakaiFailas.open(kiet);
+    writeTitle(ofKietiakaiFailas);
+    for(const auto &kint : kietiakaiList) {
+      writeResults(kint, ofKietiakaiFailas);
     }
-    else {
-      kietiakaiVector.push_back(kint);
+    ofKietiakaiFailas.close();
+
+    grupeStudentaiList.clear();
+    vargsiukaiList.clear();
+    kietiakaiList.clear();
+    
+    //-------vector-----//
+    ifStudentuFailas.open(fn);
+    readFile(ifStudentuFailas, grupeStudentaiVector);
+    ifStudentuFailas.close();
+
+    pazSkaic(grupeStudentaiVector);
+    start = std::chrono::high_resolution_clock::now();
+    for (const auto &kint: grupeStudentaiVector) {
+      if(kint.galutinis_paz < 5){
+        vargsiukaiVector.push_back(kint); 
+      }
+      else {
+        kietiakaiVector.push_back(kint);
+      }
     }
+    end = std::chrono::high_resolution_clock::now();
+    diff = end-start;
+    cout << i << " studentų dalijimas į dvi grupes užtruko naudojant vector: ";
+    cout << diff.count() << "s" << endl;
+    
+    grupeStudentaiVector.clear();
+    vargsiukaiVector.clear();
+    kietiakaiVector.clear();
+
+    grupeStudentaiVector.shrink_to_fit();
+    vargsiukaiVector.shrink_to_fit();
+    kietiakaiVector.shrink_to_fit();
+
+    //------deque-----//
+    ifStudentuFailas.open(fn);
+    readFile(ifStudentuFailas, grupeStudentaiDeque);
+    ifStudentuFailas.close();
+
+    pazSkaic(grupeStudentaiDeque);
+    start = std::chrono::high_resolution_clock::now();
+    for (const auto &kint: grupeStudentaiDeque) {
+      if(kint.galutinis_paz < 5){
+        vargsiukaiDeque.push_back(kint); 
+      }
+      else {
+        kietiakaiDeque.push_back(kint);
+      }
+    }
+    end = std::chrono::high_resolution_clock::now();
+    diff = end-start;
+    cout << i <<" studentų dalijimas į dvi grupes užtruko naudojant deque: ";
+    cout << diff.count() << "s" << endl;
+    cout << endl;
+
+    grupeStudentaiDeque.clear();
+    vargsiukaiDeque.clear();
+    kietiakaiDeque.clear();  
+
+    grupeStudentaiDeque.shrink_to_fit();
+    vargsiukaiDeque.shrink_to_fit();
+    kietiakaiDeque.shrink_to_fit();
+
+    fn.clear();
+    varg.clear();
+    kiet.clear();
   }
-  end = std::chrono::high_resolution_clock::now();
-  diff = end-start;
-  cout << nStudentai <<" studentų dalijimas į dvi grupes užtruko naudojant vector: ";
-  cout << diff.count() << "s" << endl;
-
-  grupeStudentaiVector.clear();
-  vargsiukaiVector.clear();
-  kietiakaiVector.clear();
-
-  grupeStudentaiVector.shrink_to_fit();
-  vargsiukaiVector.shrink_to_fit();
-  kietiakaiVector.shrink_to_fit();
-
-  ifStudentuFailas.open("studentų sąrašas.txt");
-  readFile(ifStudentuFailas, grupeStudentaiDeque);
-  ifStudentuFailas.close();
-
-  pazSkaic(grupeStudentaiDeque);
-  start = std::chrono::high_resolution_clock::now();
-  for (const auto &kint: grupeStudentaiDeque) {
-    if(kint.galutinis_paz < 5){
-      vargsiukaiDeque.push_back(kint); 
-    }
-    else {
-      kietiakaiDeque.push_back(kint);
-    }
-  }
-  end = std::chrono::high_resolution_clock::now();
-  diff = end-start;
-  cout << nStudentai <<" studentų dalijimas į dvi grupes užtruko naudojant deque: ";
-  cout << diff.count() << "s" << endl;
-
-  grupeStudentaiDeque.clear();
-  vargsiukaiDeque.clear();
-  kietiakaiDeque.clear();  
-
-  grupeStudentaiDeque.shrink_to_fit();
-  vargsiukaiDeque.shrink_to_fit();
-  kietiakaiDeque.shrink_to_fit();
 } 
