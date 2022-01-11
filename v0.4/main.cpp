@@ -15,7 +15,6 @@ int main() {
   vector <studentas> grupeStudentai;  
   vector <studentas> vargsiukai;
   vector <studentas> kietiakai;
-  vector <studentas> tempGrupe;
 
   int nStudentai;
   int nPaz;
@@ -37,10 +36,26 @@ int main() {
   cout << nStudentai <<" studentų pažymių užpildymas užtruko: ";
   cout << diff.count() << "s" << endl;
 
-  tempGrupe = grupeStudentai;
-  pazSkaic(tempGrupe);
+  writeGeneratedListTitle(nPaz, ofStudentuFailas);
+  for(const auto &kint : grupeStudentai) { 
+    writeGeneratedList(kint, ofStudentuFailas);   
+  }
+  grupeStudentai.clear();
+  ofStudentuFailas.close();
+
+  //ima laika pries pradedant
   start = std::chrono::high_resolution_clock::now();
-  for (const auto &kint: tempGrupe) {
+  readFile(ifStudentuFailas, grupeStudentai);
+  ifStudentuFailas.close();
+  //ima laiko pabaigus
+  end = std::chrono::high_resolution_clock::now();
+  diff = end-start;
+  cout <<"Failo iš " << nStudentai <<" studentų įrašų nuskaitymo laikas: ";
+  cout << diff.count() << "s" << endl;
+
+  pazSkaic(grupeStudentai);
+  start = std::chrono::high_resolution_clock::now();
+  for (const auto &kint: grupeStudentai) {
     if(kint.galutinis_paz < 5){
       vargsiukai.push_back(kint); 
     }
@@ -58,12 +73,6 @@ int main() {
   sort(vargsiukai.begin(), vargsiukai.end(), compareStudents);
   sort(kietiakai.begin(), kietiakai.end(), compareStudents);
 
-  writeGeneratedListTitle(nPaz, ofStudentuFailas);
-  for(const auto &kint : grupeStudentai) { 
-    writeGeneratedList(kint, ofStudentuFailas);   
-  }
-  ofStudentuFailas.close();
-  
   start = std::chrono::high_resolution_clock::now();
   writeTitle(ofVargsiukaiFailas);
   for(const auto &kint : vargsiukai) {
@@ -85,37 +94,12 @@ int main() {
   diff = end-start;
   cout <<"kietiakų įrašymas į failą užtruko: ";
   cout << diff.count() << "s" << endl;
-  
-  
-  //ima laikies pries pradedant
-  start = std::chrono::high_resolution_clock::now();
-  if(ifStudentuFailas.is_open()){
-    vector <studentas> tempGrupe;
-    studentas temp;
-    float tempPaz;
-    string line;
-    getline(ifStudentuFailas, line);
-    while(getline(ifStudentuFailas, line)) {
-      istringstream iss(line);
-      iss >> temp.vardas >> temp.pavarde;
-      
-      while(iss >> tempPaz){
-        temp.paz.push_back(tempPaz);
-        temp.egz = tempPaz;
-      }
-			temp.paz.pop_back();
-      tempGrupe.push_back(temp);
-      temp.paz.clear();
 
-    }
-    ifStudentuFailas.close();
-  }
-  else{ cout << "neišeina atidaryti failo"; }
-  //ima laiko pabaigus
-  end = std::chrono::high_resolution_clock::now();
-  diff = end-start;
-  cout <<"Failo iš " << nStudentai <<" studentų įrašų nuskaitymo laikas: ";
-  cout << diff.count() << "s" << endl;
+  grupeStudentai.clear();
+  vargsiukai.clear();
+  kietiakai.clear();
 
-
+  grupeStudentai.shrink_to_fit();
+  vargsiukai.shrink_to_fit();
+  kietiakai.shrink_to_fit();
 } 
